@@ -1,30 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Kumpulan.css/StatusPengajuanUser.css';
-
+import axios from 'axios';
 function StatusPengajuan() {
-  const pengajuan = [
-    {
-      id: 1,
-      barang: 'Laptop ASUS',
-      jumlah: 1,
-      tanggal: '2025-07-01',
-      status: 'Menunggu Persetujuan',
-    },
-    {
-      id: 2,
-      barang: 'Kamera Canon',
-      jumlah: 1,
-      tanggal: '2025-06-28',
-      status: 'Disetujui',
-    },
-    {
-      id: 3,
-      barang: 'Proyektor Epson',
-      jumlah: 1,
-      tanggal: '2025-06-26',
-      status: 'Ditolak',
-    },
-  ];
+  const [pengajuan,setPengajuan] = useState([])
+
+  useEffect(()=>{
+    const userId = localStorage.getItem('userId')
+    axios.get(`http://localhost:5000/users/${userId}/peminjaman`)
+    .then((res)=>{
+      setPengajuan(res.data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  },[])
 
   return (
     <div className="status-container">
@@ -45,7 +34,7 @@ function StatusPengajuan() {
               <td>{index + 1}</td>
               <td>{item.barang}</td>
               <td>{item.jumlah}</td>
-              <td>{item.tanggal}</td>
+              <td>{new Date(item.tanggal).toLocaleDateString('id-ID')}</td>
               <td>
                 <span className={`badge ${item.status.toLowerCase().replaceAll(' ', '-')}`}>
                   {item.status}

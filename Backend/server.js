@@ -753,6 +753,60 @@ app.patch('/users/:id/password', async (req, res) => {
   }
 });
 
+// Endpoint: Mengambil statistik peminjaman untuk satu user
+app.get('/users/:userId/peminjaman/statistik', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const query = `
+      SELECT
+        -- Hitung semua record milik user ini sebagai Total Peminjaman
+        COUNT(*) AS total_peminjaman,
+        -- Hitung hanya yang statusnya 'pending' atau 'menunggu konfirmasi'
+        COUNT(CASE WHEN status IN ('pending', 'menunggu konfirmasi') THEN 1 ELSE NULL END) AS pengajuan_diproses,
+        -- Hitung hanya yang statusnya 'sudah dikembalikan' atau 'Selesai'
+        COUNT(CASE WHEN status IN ('sudah dikembalikan', 'Selesai') THEN 1 ELSE NULL END) AS riwayat_selesai
+      FROM peminjaman
+      WHERE user_id = ?
+    `;
+
+    const [[stats]] = await pool.promise().query(query, [userId]);
+    res.status(200).json(stats);
+
+  } catch (error) {
+    console.error('Gagal mengambil statistik user:', error);
+    res.status(500).json({ message: 'Gagal mengambil data statistik.' });
+  }
+});
+
+
+// Endpoint: Mengambil semua status pengajuan untuk satu user
+app.get('/users/:userId/peminjaman', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const query = `
+      SELECT 
+        peminjaman.id,
+        barang.nama AS barang,
+        peminjaman.jumlah,
+        peminjaman.tanggal_pinjam AS tanggal,
+        peminjaman.status
+      FROM peminjaman
+      JOIN barang ON peminjaman.barang_id = barang.id
+      WHERE peminjaman.user_id = ?
+      ORDER BY peminjaman.id DESC
+    `;
+
+    const [results] = await pool.promise().query(query, [userId]);
+    res.status(200).json(results);
+
+  } catch (error) {
+    console.error('Gagal mengambil status pengajuan user:', error);
+    res.status(500).json({ message: 'Gagal mengambil data pengajuan.' });
+  }
+});
+
 // Start server
 app.listen(5000, () => {
   console.log('🚀 Server jalan di http://localhost:5000');
