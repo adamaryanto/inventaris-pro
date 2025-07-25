@@ -1,0 +1,116 @@
+/* -- Dashboard Admin -- */
+
+/* Tipografi dasar untuk judul dan salam */
+.dashboard-container h1 {
+  font-size: 32px;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.dashboard-container p {
+  font-size: 18px;
+  color: #6b7280;
+  margin-top: 0;
+  margin-bottom: 32px;
+}
+
+/* Container untuk semua kartu statistik */
+.stat-card-container {
+  display: grid;
+  /* Membuat grid responsif: minimal 220px, maksimal 1fr (membagi rata) */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px; /* Jarak antar kartu */
+}
+
+/* Gaya dasar untuk setiap kartu */
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Ikon di dalam kartu */
+.stat-card .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+/* Label teks (misal: "Permintaan Peminjaman") */
+.stat-card .label {
+  font-size: 15px;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* Nilai angka statistik */
+.stat-card .value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 4px 0 0 0;
+}
+
+
+/* --- Variasi Warna Kartu --- */
+
+/* Biru */
+.stat-card.blue {
+  background-color: #e0f2fe;
+}
+.stat-card.blue .icon {
+  background-color: #bae6fd;
+  color: #0c4a6e;
+}
+.stat-card.blue .value {
+  color: #0369a1;
+}
+
+/* Hijau */
+.stat-card.green {
+  background-color: #dcfce7;
+}
+.stat-card.green .icon {
+  background-color: #bbf7d0;
+  color: #14532d;
+}
+.stat-card.green .value {
+  color: #15803d;
+}
+
+/* Ungu */
+.stat-card.purple {
+  background-color: #ede9fe;
+}
+.stat-card.purple .icon {
+  background-color: #ddd6fe;
+  color: #5b21b6;
+}
+.stat-card.purple .value {
+  color: #6d28d9;
+}
+
+/* Merah */
+.stat-card.red {
+  background-color: #fee2e2;
+}
+.stat-card.red .icon {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+.stat-card.red .value {
+  color: #b91c1c;
+}

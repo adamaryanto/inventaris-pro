@@ -1,0 +1,96 @@
+.user-pengembalian-container {
+  padding: 30px;
+  background-color: #f9fafb;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.user-pengembalian-container h2 {
+  font-size: 28px;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.user-pengembalian-container p {
+  font-size: 16px;
+  color: #6b7280;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+/* Layout untuk daftar kartu */
+.card-list-pengembalian {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* Styling untuk setiap kartu barang */
+.kartu-barang {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.kartu-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.kartu-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.kartu-header .jumlah {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.kartu-body {
+  padding: 20px;
+  flex-grow: 1; /* Mendorong footer ke bawah */
+}
+
+.detail-item {
+  margin-bottom: 15px;
+}
+
+.detail-item span {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.detail-item p {
+  font-size: 16px;
+  color: #374151;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+}
+
+.kartu-footer {
+  padding: 20px;
+  background-color: #f9fafb;
+}
+
+.btn-kembalikan {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-kembalikan:hover {
+  background-color: #0056b3;
+}

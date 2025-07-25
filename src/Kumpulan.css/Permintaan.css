@@ -1,0 +1,101 @@
+/* Container utama halaman permintaan */
+.permintaan-container {
+  padding: 30px;
+  background-color: #f9fafb;
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 8px;
+}
+
+.permintaan-container h2 {
+  font-size: 28px;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+/* Styling tabel utama */
+.table-permintaan {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden; /* Agar border-radius terlihat di sudut tabel */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Header tabel */
+.table-permintaan th {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 15px 20px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sel data di tabel */
+.table-permintaan td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #4b5563;
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+/* Menghilangkan border di baris terakhir */
+.table-permintaan tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Efek hover pada baris tabel */
+.table-permintaan tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Styling untuk badge status */
+.status {
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  background-color: #fef3c7; /* Kuning muda */
+  color: #92400e; /* Coklat tua */
+}
+
+/* Container untuk tombol aksi */
+.btnAction {
+  display: flex;
+  gap: 8px; /* Jarak antar tombol */
+}
+
+/* Styling tombol Setujui dan Tolak */
+.setujui-btn,
+.tolak-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  transition: opacity 0.2s ease;
+}
+
+.setujui-btn:hover,
+.tolak-btn:hover {
+  opacity: 0.85;
+}
+
+.setujui-btn {
+  background-color: #10b981; /* Hijau */
+}
+
+.tolak-btn {
+  background-color: #ef4444; /* Merah */
+}
