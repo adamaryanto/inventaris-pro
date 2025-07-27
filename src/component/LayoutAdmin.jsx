@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../Kumpulan.css/LayoutAdmin.css';
 import axios from 'axios';
 import {
   FaBars,
@@ -61,58 +60,89 @@ function LayoutAdmin() {
   ];
 
   function handleLogout() {
-    if (confirm("Yakin ingin logout?")) {
+    // Menggunakan window.confirm karena confirm() mungkin tidak berfungsi di beberapa environment
+    if (window.confirm("Yakin ingin logout?")) {
       localStorage.clear(); // Bersihkan semua localStorage untuk keamanan
       navigate('/');
     }
   }
 
   return (
-    <div className="dashboard-container">
+    <div className="flex h-screen font-sans bg-[#f7f0ff]">
       {/* Overlay yang hanya muncul di mode mobile saat sidebar terbuka */}
-      {isMobileMenuOpen && <div className="sidebar-overlay" onClick={toggleMobileSidebar}></div>}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-[999] md:hidden" 
+          onClick={toggleMobileSidebar}>
+        </div>
+      )}
 
       {/* Sidebar */}
-      <div className={`sidebar ${collapsed ? 'collapsed' : ''} ${isMobileMenuOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          {!collapsed && (
-            <div className="user-info">
-              <p className="user-name">{name}</p>
-              <p className="user-role">{role}</p>
-            </div>
-          )}
-          {/* Tombol ini hanya untuk mode desktop */}
-          <button className="toggle-btn desktop-only" onClick={toggleDesktopSidebar}>
-            <FaBars />
-          </button>
+      <div className={`
+        bg-[#6a0dad] text-white 
+        flex flex-col justify-between flex-shrink-0
+        transition-all duration-300 ease-in-out
+        fixed md:relative h-full z-[1000] 
+        ${isMobileMenuOpen ? 'translate-x-0 shadow-lg' : '-translate-x-full'}
+        md:translate-x-0 
+        ${collapsed ? 'w-20' : 'w-64'}
+      `}>
+        <div>
+          <div className={`
+            flex items-center justify-between 
+            p-4 border-b border-[#5a009d]
+          `}>
+            {!collapsed && (
+              <div className="opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                <p className="font-bold text-base">{name}</p>
+                <p className="text-xs text-[#e0cffc]">{role}</p>
+              </div>
+            )}
+            {/* Tombol ini hanya untuk mode desktop */}
+            <button className="hidden md:block bg-transparent border-none text-white text-xl cursor-pointer p-2" onClick={toggleDesktopSidebar}>
+              <FaBars />
+            </button>
+          </div>
+
+          <ul className="list-none p-0 m-0 flex-grow overflow-y-auto">
+            {menuItems.map((item, index) => (
+              <li key={index}>
+                <Link
+                  to={item.path}
+                  className={`
+                    flex items-center text-[#e0cffc] no-underline gap-4 px-6 py-3.5 text-[0.95rem] whitespace-nowrap 
+                    transition-colors duration-200 
+                    hover:bg-[#5a009d] hover:text-white
+                    ${location.pathname === item.path ? 'bg-[#4a008d] text-white font-bold' : ''}
+                  `}
+                  // Saat link di mobile diklik, tutup sidebar
+                  onClick={() => { if (isMobileMenuOpen) setIsMobileMenuOpen(false); }}
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  {!collapsed && <span className="opacity-100 transition-opacity duration-300">{item.label}</span>}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <ul className="menu-list">
-          {menuItems.map((item, index) => (
-            <li key={index}>
-              <Link
-                to={item.path}
-                className={`menu-link ${location.pathname === item.path ? 'active' : ''}`}
-                // Saat link di mobile diklik, tutup sidebar
-                onClick={() => { if (isMobileMenuOpen) setIsMobileMenuOpen(false) }}
-              >
-                {item.icon}
-                {!collapsed && <span>{item.label}</span>}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="logout-section" title='Logout' onClick={handleLogout}>
-          <FaSignOutAlt />
-          {!collapsed && <span>Logout</span>}
+        
+        <div 
+          className="px-6 py-4 flex items-center cursor-pointer gap-4 border-t border-[#5a009d] text-[0.95rem] whitespace-nowrap hover:bg-[#5a009d]" 
+          title='Logout' 
+          onClick={handleLogout}
+        >
+          <span className="text-lg"><FaSignOutAlt /></span>
+          {!collapsed && <span className="opacity-100 transition-opacity duration-300">Logout</span>}
         </div>
       </div>
 
       {/* Konten Halaman */}
-      <div className="content">
+      <div className="flex-grow p-6 overflow-y-auto relative z-10">
         {/* Tombol "hamburger" yang hanya muncul di mobile untuk MEMBUKA menu */}
-        <button className="mobile-toggle-btn" onClick={toggleMobileSidebar}>
+        <button 
+          className="md:hidden absolute top-4 left-4 z-20 bg-[#6a0dad] text-white border-none rounded-full w-11 h-11 text-xl cursor-pointer shadow-md flex justify-center items-center" 
+          onClick={toggleMobileSidebar}
+        >
           <FaBars />
         </button>
         <Outlet />

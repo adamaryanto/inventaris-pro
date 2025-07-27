@@ -807,6 +807,83 @@ app.get('/users/:userId/peminjaman', async (req, res) => {
   }
 });
 
+// Endpoint: Update profil pengguna (nama, username, email)
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { fullName, username, email } = req.body;
+
+  // Validasi input
+  if (!fullName || !username || !email) {
+    return res.status(400).json({ message: 'Semua field wajib diisi.' });
+  }
+
+  try {
+    // 1. Cek apakah username atau email baru sudah digunakan oleh user LAIN
+    const conflictQuery = `
+      SELECT id FROM users 
+      WHERE (username = ? OR email = ?) AND id != ?
+    `;
+    const [conflictUsers] = await pool.promise().query(conflictQuery, [username, email, id]);
+
+    if (conflictUsers.length > 0) {
+      return res.status(409).json({ message: 'Username atau email sudah digunakan oleh pengguna lain.' });
+    }
+
+    // 2. Jika tidak ada konflik, update data pengguna
+    const updateQuery = `
+      UPDATE users 
+      SET full_name = ?, username = ?, email = ? 
+      WHERE id = ?
+    `;
+    const [result] = await pool.promise().execute(updateQuery, [fullName, username, email, id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'User tidak ditemukan.' });
+    }
+
+    res.status(200).json({ message: 'Profil berhasil diperbarui.' });
+
+  } catch (error) {
+    console.error("Gagal update profil:", error);
+    res.status(500).json({ message: 'Terjadi kesalahan pada server.' });
+  }
+});
+
+
+
+// Endpoint: Mengambil detail lengkap profil seorang pengguna
+app.get('/users/:id/detail', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Ambil kolom yang dibutuhkan, termasuk 'created_at' untuk tanggal bergabung
+    const query = `
+      SELECT id, full_name, username, email, role, created_at 
+      FROM users 
+      WHERE id = ?
+    `;
+    const [[user]] = await pool.promise().query(query, [id]); // Destructuring ganda
+
+    if (!user) {
+      return res.status(404).json({ message: 'Pengguna tidak ditemukan.' });
+    }
+    
+    // Kirim kembali data profil lengkap
+    res.status(200).json({
+      nama: user.full_name,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      bergabung: user.created_at // Ini akan menjadi tanggal bergabung
+    });
+
+  } catch (error) {
+    console.error("Gagal mengambil detail profil:", error);
+    res.status(500).json({ message: 'Gagal mengambil detail profil.' });
+  }
+});
+
+
 // Start server
 app.listen(5000, () => {
   console.log('🚀 Server jalan di http://localhost:5000');
