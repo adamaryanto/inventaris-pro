@@ -1,95 +1,70 @@
-Inventaris Pro - Aplikasi Manajemen Inventaris
-Inventaris Pro adalah aplikasi web yang dirancang untuk memudahkan pengelolaan dan peminjaman barang dalam sebuah organisasi atau perusahaan. Aplikasi ini dibangun dengan React.js untuk frontend dan Node.js/Express untuk backend, serta dilengkapi dengan sistem otentikasi berbasis peran (Admin dan User).
+# 📦 Inventaris Pro
 
-Tampilan Aplikasi
-Berikut adalah tampilan halaman login dari aplikasi Inventaris Pro:
+Inventaris Pro adalah aplikasi web manajemen inventaris berbasis MERN Stack (MySQL, Express, React, Node.js) yang dirancang untuk memudahkan proses peminjaman dan pengembalian barang. Aplikasi ini memiliki dua peran utama: Admin dan User, dengan fitur yang disesuaikan untuk masing-masing peran.
 
-Fitur Utama
-Aplikasi ini memiliki dua peran utama dengan fitur yang berbeda:
 
-👤 Fitur untuk User (Pengguna)
-Dashboard: Melihat ringkasan statistik peminjaman pribadi.
 
-Ajukan Peminjaman: Membuat permintaan peminjaman barang yang tersedia.
+## ✨ Fitur Utama
 
-Status Pengajuan: Memantau status permintaan yang diajukan (Pending, Disetujui, Ditolak).
+### Sebagai Admin
+- **Dashboard Interaktif**: Menampilkan statistik utama seperti jumlah barang, pengguna, permintaan baru, dan barang hampir habis dalam bentuk kartu dan chart (Bar & Line).
+- **Manajemen Barang (CRUD)**: Menambah, melihat, mengedit, dan menghapus data barang dalam inventaris.
+- **Manajemen Pengguna**: Melihat, menambah, mengedit role, dan menghapus data pengguna.
+- **Proses Peminjaman**: Menyetujui atau menolak permintaan peminjaman dari user. Stok barang akan berkurang secara otomatis.
+- **Konfirmasi Pengembalian**: Mengonfirmasi pengembalian barang dari user. Stok barang akan bertambah kembali.
+- **Riwayat**: Melihat seluruh riwayat transaksi peminjaman dan pengembalian.
+- **Laporan**: Mengekspor data laporan peminjaman ke dalam format **PDF** dan **Excel**.
 
-Riwayat Peminjaman: Melihat semua riwayat transaksi peminjaman yang pernah dilakukan.
+### Sebagai User
+- **Melihat Daftar Barang**: Melihat semua barang yang tersedia untuk dipinjam.
+- **Mengajukan Peminjaman**: Membuat permintaan untuk meminjam barang.
+- **Melihat Status**: Memantau status pengajuan peminjaman (Pending, Disetujui, Ditolak).
+- **Mengajukan Pengembalian**: Mengirim notifikasi ke admin untuk proses pengembalian barang.
+- **Melihat Riwayat**: Melihat riwayat peminjaman pribadi.
+- **Pengaturan Akun**: Mengubah password pribadi.
 
-Pengembalian Barang: Mengajukan proses pengembalian barang yang telah selesai dipinjam.
+---
 
-Profil: Mengelola detail informasi akun pribadi.
+## 🚀 Teknologi yang Digunakan
 
-👑 Fitur untuk Admin
-Semua fitur User.
+### Frontend
+- **React.js**: Library utama untuk membangun antarmuka pengguna.
+- **React Router**: Untuk navigasi antar halaman.
+- **Axios**: Untuk melakukan permintaan HTTP ke backend.
+- **Chart.js**: Untuk visualisasi data dalam bentuk chart.
+- **jsPDF & jspdf-autotable**: Untuk membuat laporan PDF.
+- **SheetJS (xlsx)**: Untuk membuat laporan Excel.
+- **Sonner**: Untuk menampilkan notifikasi (toast).
 
-Dashboard Admin: Melihat statistik keseluruhan inventaris, jumlah pengguna, dan permintaan yang masuk.
+### Backend
+- **Node.js**: Lingkungan eksekusi JavaScript di sisi server.
+- **Express.js**: Framework untuk membangun API.
+- **MySQL2**: Driver untuk menghubungkan aplikasi dengan database MySQL.
+- **JWT (JSON Web Token)**: Untuk autentikasi pengguna yang aman.
+- **Bcrypt**: Untuk hashing (enkripsi) password.
+- **CORS**: Untuk mengelola akses API dari domain yang berbeda.
 
-Manajemen Data Barang: Menambah, mengubah, dan menghapus data barang di inventaris.
+### Database
+- **MySQL**
 
-Konfirmasi Permintaan: Menyetujui atau menolak permintaan peminjaman dari pengguna.
+---
 
-Konfirmasi Pengembalian: Memverifikasi dan menyelesaikan proses pengembalian barang dari pengguna.
+## 🛠️ Instalasi dan Menjalankan Proyek
 
-Manajemen User: Mengelola data pengguna dan mengubah peran (role) mereka.
+Untuk menjalankan proyek ini di komputer lokal Anda, ikuti langkah-langkah berikut:
 
-Laporan / Export: Membuat laporan peminjaman dan mengekspor data ke format PDF atau Excel.
-
-Teknologi yang Digunakan
-Frontend:
-
-React.js: Library utama untuk membangun antarmuka pengguna.
-
-Tailwind CSS: Framework CSS untuk styling yang cepat dan responsif.
-
-React Router: Untuk routing dan navigasi halaman.
-
-Axios: Untuk melakukan permintaan HTTP ke backend.
-
-Chart.js: Untuk menampilkan data statistik dalam bentuk grafik.
-
-Sonner: Untuk menampilkan notifikasi (toast).
-
-jsPDF & XLSX: Untuk fungsionalitas ekspor data.
-
-Backend:
-
-Node.js: Lingkungan eksekusi JavaScript di sisi server.
-
-Express.js: Framework untuk membangun API.
-
-MySQL: Database untuk menyimpan semua data aplikasi.
-
-JWT (JSON Web Tokens): Untuk otentikasi dan otorisasi yang aman.
-
-Bcrypt: Untuk hashing password.
-
-CORS: Untuk mengelola akses lintas domain.
-
-Cara Menjalankan Proyek
-Untuk menjalankan proyek ini di lingkungan lokal, ikuti langkah-langkah berikut:
-
-1. Backend Setup
-# Masuk ke direktori Backend
+### 1. Backend Setup
+```bash
+# Masuk ke folder Backend
 cd Backend
 
 # Instal semua dependensi yang dibutuhkan
 npm install
 
-# Jalankan server backend (biasanya di port 5000)
+# Buat file .env dan atur koneksi database Anda
+# (Contoh: DB_HOST=localhost, DB_USER=root, DB_PASSWORD=, DB_NAME=inventaris_pro)
+
+# Import file .sql ke database MySQL Anda untuk membuat tabel yang diperlukan
+
+# Jalankan server backend
 node server.js
-
-Pastikan Anda sudah membuat database MySQL dan mengisi detail koneksi di file konfigurasi backend.
-
-2. Frontend Setup
-# Buka terminal baru, masuk ke direktori frontend (root proyek)
-# (Jangan tutup terminal backend)
-cd .. 
-
-# Instal semua dependensi yang dibutuhkan
-npm install
-
-# Jalankan aplikasi React (biasanya di port 5173)
-npm run dev
-
-Setelah kedua server berjalan, buka http://localhost:5173 di browser Anda untuk melihat aplikasinya.
