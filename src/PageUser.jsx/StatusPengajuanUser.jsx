@@ -45,9 +45,9 @@ function StatusPengajuanUser() {
               pengajuan.map((item, index) => (
                 <tr key={item.id} className="hover:bg-gray-50">
                   <td className="border border-gray-300 p-3 text-center">{index + 1}</td>
-                  <td className="border border-gray-300 p-3 text-center">{item.nama_barang}</td>
+                  <td className="border border-gray-300 p-3 text-center">{item.barang}</td>
                   <td className="border border-gray-300 p-3 text-center">{item.jumlah}</td>
-                  <td className="border border-gray-300 p-3 text-center">{new Date(item.tanggal_pinjam).toLocaleDateString('id-ID')}</td>
+                  <td className="border border-gray-300 p-3 text-center">{new Date(item.tanggal).toLocaleDateString('id-ID')}</td>
                   <td className="border border-gray-300 p-3 text-center">
                     <span className={`font-bold px-2.5 py-1.5 rounded-md inline-block capitalize ${statusStyles[item.status.toLowerCase()] || 'bg-gray-200 text-gray-800'}`}>
                       {item.status}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   FaHome,
@@ -20,10 +21,23 @@ function LayoutUser() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [name, setName] = useState('');
+  const [role, setRole] = useState('');
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/'); // redirect ke login kalau belum login
+    }
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      axios.get(`http://localhost:5000/profile?userId=${userId}`)
+        .then((res) => {
+          setName(res.data.fullName);
+          setRole(res.data.role);
+        })
+        .catch((err) => {
+          console.error("Gagal ambil profil:", err);
+        });
     }
   }, [navigate]);
 
@@ -52,7 +66,7 @@ function LayoutUser() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#f5f7fa] font-sans">
+    <div className="flex h-screen overflow-hidden bg-[#f5f7fa] font-sans">
       {/* Overlay untuk mobile saat menu terbuka */}
       {isMobileMenuOpen && (
         <div 
@@ -77,8 +91,8 @@ function LayoutUser() {
           <div className="flex items-center justify-between p-4 bg-[#1a252f] font-bold">
             {!collapsed && (
               <div className="whitespace-nowrap transition-opacity duration-300">
-                <p className="text-base m-0">User</p>
-                <p className="text-xs text-gray-400">Pengguna</p>
+                <p className="text-base m-0">{name}</p>
+                <p className="text-xs text-gray-400">{role}</p>
               </div>
             )}
             <button className="bg-transparent border-none text-white text-xl cursor-pointer" onClick={toggleSidebar}>

@@ -101,7 +101,7 @@ function DashboardAdmin() {
       <p className="text-lg text-gray-500 mt-0 mb-8">Selamat datang kembali, {name}</p>
 
       {/* Container untuk kartu statistik */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-6">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-6 bg-white p-4 shadow-md rounded-3xl">
         
         <div className={`${baseCardClasses} bg-sky-100`}>
           <div className={`${baseIconClasses} bg-sky-200 text-sky-800`}>📄</div>

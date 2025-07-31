@@ -113,38 +113,147 @@ function DataBarang() {
       </div>
 
       {/* Form Tambah Barang */}
-      {formTambahVisible && (
-        <form className="bg-white p-6 rounded-lg shadow-lg my-8 max-w-4xl mx-auto" onSubmit={tambahBarang}>
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <input className={commonInputClasses} type="text" placeholder="Kode Barang" onChange={(e) => setInputKode(e.target.value)} required />
-            <input className={commonInputClasses} type="text" placeholder="Nama Barang" onChange={(e) => setInputNama(e.target.value)} required />
-            <input className={commonInputClasses} type="text" placeholder="Lokasi Barang" onChange={(e) => setInputLokasi(e.target.value)} required />
-            <input className={commonInputClasses} type="number" placeholder="Jumlah Barang" onChange={(e) => setInputStok(e.target.value)} required />
-            <input className={commonInputClasses} type="text" placeholder="Kategori" onChange={(e) => setInputKategori(e.target.value)} required />
-          </div>
-          <div className="flex flex-col md:flex-row justify-end gap-3">
-            <button type="button" className="w-full md:w-auto py-2.5 px-5 bg-gray-200 text-gray-800 rounded-md font-semibold hover:bg-gray-300" onClick={() => setFormTambahVisible(false)}>Cancel</button>
-            <button type="submit" className="w-full md:w-auto py-2.5 px-5 bg-emerald-500 text-white rounded-md font-semibold hover:bg-emerald-600">Kirim</button>
-          </div>
+{formTambahVisible && (
+    // Lapisan Overlay: menutupi seluruh layar dengan latar belakang blur
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+        
+        {/* Konten Form: Diletakkan di tengah oleh parent-nya */}
+        <form 
+            className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-2xl" 
+            onSubmit={tambahBarang}
+        >
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Tambah Barang Baru</h2>
+            
+            <div className="flex flex-col gap-4">
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Kode Barang" 
+                    onChange={(e) => setInputKode(e.target.value)} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Nama Barang" 
+                    onChange={(e) => setInputNama(e.target.value)} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Lokasi Barang" 
+                    onChange={(e) => setInputLokasi(e.target.value)} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="number" 
+                    placeholder="Jumlah Barang" 
+                    onChange={(e) => setInputStok(e.target.value)} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Kategori" 
+                    onChange={(e) => setInputKategori(e.target.value)} 
+                    required 
+                />
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-end gap-3 mt-6">
+                <button 
+                    type="button" 
+                    className="w-full md:w-auto py-2.5 px-5 bg-gray-200 text-gray-800 rounded-md font-semibold hover:bg-gray-300 transition-colors" 
+                    onClick={() => setFormTambahVisible(false)}
+                >
+                    Cancel
+                </button>
+                <button 
+                    type="submit" 
+                    className="w-full md:w-auto py-2.5 px-5 bg-emerald-500 text-white rounded-md font-semibold hover:bg-emerald-600 transition-colors"
+                >
+                    Kirim
+                </button>
+            </div>
         </form>
-      )}
+    </div>
+)}
 
       {/* Form Edit Barang */}
-      {formEditVisible && (
-        <form className="bg-white p-6 rounded-lg shadow-lg my-8 max-w-4xl mx-auto" onSubmit={editBarang}>
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <input className={commonInputClasses} type="text" placeholder="Kode Barang" value={barangEdit.kode} onChange={(e) => setBarangEdit({ ...barangEdit, kode: e.target.value })} required />
-            <input className={commonInputClasses} type="text" placeholder="Nama Barang" value={barangEdit.nama} onChange={(e) => setBarangEdit({ ...barangEdit, nama: e.target.value })} required />
-            <input className={commonInputClasses} type="text" placeholder="Lokasi Barang" value={barangEdit.lokasi} onChange={(e) => setBarangEdit({ ...barangEdit, lokasi: e.target.value })} required />
-            <input className={commonInputClasses} type="number" placeholder="Jumlah Barang" value={barangEdit.stok} onChange={(e) => setBarangEdit({ ...barangEdit, stok: e.target.value })} required />
-            <input className={commonInputClasses} type="text" placeholder="Kategori" value={barangEdit.kategori} onChange={(e) => setBarangEdit({ ...barangEdit, kategori: e.target.value })} required />
-          </div>
-          <div className="flex flex-col md:flex-row justify-end gap-3">
-            <button type="button" className="w-full md:w-auto py-2.5 px-5 bg-gray-200 text-gray-800 rounded-md font-semibold hover:bg-gray-300" onClick={() => setFormEditVisible(false)}>Cancel</button>
-            <button type="submit" className="w-full md:w-auto py-2.5 px-5 bg-emerald-500 text-white rounded-md font-semibold hover:bg-emerald-600">Edit</button>
-          </div>
+{formEditVisible && (
+    // Lapisan Overlay: Latar belakang diubah menjadi blur
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+        
+        {/* Konten Form: Diletakkan di tengah oleh parent-nya */}
+        <form 
+            className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-2xl" 
+            onSubmit={editBarang}
+        >
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Barang</h2>
+            
+            <div className="flex flex-col gap-4">
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Kode Barang" 
+                    value={barangEdit.kode} 
+                    onChange={(e) => setBarangEdit({ ...barangEdit, kode: e.target.value })} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Nama Barang" 
+                    value={barangEdit.nama} 
+                    onChange={(e) => setBarangEdit({ ...barangEdit, nama: e.target.value })} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Lokasi Barang" 
+                    value={barangEdit.lokasi} 
+                    onChange={(e) => setBarangEdit({ ...barangEdit, lokasi: e.target.value })} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="number" 
+                    placeholder="Jumlah Barang" 
+                    value={barangEdit.stok} 
+                    onChange={(e) => setBarangEdit({ ...barangEdit, stok: e.target.value })} 
+                    required 
+                />
+                <input 
+                    className={commonInputClasses} 
+                    type="text" 
+                    placeholder="Kategori" 
+                    value={barangEdit.kategori} 
+                    onChange={(e) => setBarangEdit({ ...barangEdit, kategori: e.target.value })} 
+                    required 
+                />
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-end gap-3 mt-6">
+                <button 
+                    type="button" 
+                    className="w-full md:w-auto py-2.5 px-5 bg-gray-200 text-gray-800 rounded-md font-semibold hover:bg-gray-300 transition-colors" 
+                    onClick={() => setFormEditVisible(false)}
+                >
+                    Cancel
+                </button>
+                <button 
+                    type="submit" 
+                    className="w-full md:w-auto py-2.5 px-5 bg-emerald-500 text-white rounded-md font-semibold hover:bg-emerald-600 transition-colors"
+                >
+                    Edit
+                </button>
+            </div>
         </form>
-      )}
+    </div>
+)}
 
       {/* Tabel Data Barang */}
       <div className="overflow-x-auto rounded-lg shadow-md">
