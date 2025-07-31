@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import mysql from 'mysql2';
 import bcrypt from 'bcrypt';
@@ -13,10 +14,10 @@ app.use(express.json());
 
 // Koneksi ke database menggunakan Pool
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'inventaris_pro',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -885,6 +886,6 @@ app.get('/users/:id/detail', async (req, res) => {
 
 
 // Start server
-app.listen(5000, () => {
-  console.log('🚀 Server jalan di http://localhost:5000');
-});
+// app.listen(5000, () => {
+//   console.log('🚀 Server jalan di http://localhost:5000');
+// });
