@@ -9,7 +9,9 @@ const app = express();
 const SECRET_KEY = 'rahasia-super-aman';
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173' // Hanya izinkan permintaan dari alamat ini
+}));
 app.use(express.json());
 
 // TAMBAHKAN RUTE TES INI DI SINI
