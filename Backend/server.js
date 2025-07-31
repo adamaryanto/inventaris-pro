@@ -12,6 +12,10 @@ const SECRET_KEY = 'rahasia-super-aman';
 app.use(cors());
 app.use(express.json());
 
+// TAMBAHKAN RUTE TES INI DI SINI
+app.get('/', (req, res) => {
+  res.send('Server Vercel jalan!');
+});
 // Koneksi ke database menggunakan Pool
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
