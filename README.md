@@ -1,6 +1,6 @@
 # 📦 Inventaris Pro
 
-Inventaris Pro adalah aplikasi web manajemen inventaris berbasis MERN Stack (MySQL, Express, React, Node.js) yang dirancang untuk memudahkan proses peminjaman dan pengembalian barang. Aplikasi ini memiliki dua peran utama: Admin dan User, dengan fitur yang disesuaikan untuk masing-masing peran.
+Inventaris Pro adalah aplikasi web manajemen inventaris berbasis MERN Stack (MySQL, Express, React, Node.js) yang dirancang untuk memudahkan proses peminjaman dan pengembalian barang. Aplikasi ini memiliki dua peran utama: Admin dan User, dengan fitur yang disesuaikan untuk masing-masing peran
 
 
 
