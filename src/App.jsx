@@ -22,11 +22,10 @@ import TambahUser from "./Page Admin/TambahUSer";
 
 // Layout dan Pages Admin
 
-
-
 function App() {
   return (
-    <BrowserRouter>
+    // === PERUBAHAN ADA DI SINI ===
+    <BrowserRouter basename="/inventaris-pro">
       <Toaster richColors position="top-center" />
       <Routes>
         {/* Halaman umum (di luar layout) */}
@@ -62,3 +61,4 @@ function App() {
 }
 
 export default App;
+
