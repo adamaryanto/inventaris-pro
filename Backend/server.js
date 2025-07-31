@@ -8,10 +8,23 @@ import jwt from 'jsonwebtoken';
 const app = express();
 const SECRET_KEY = 'rahasia-super-aman';
 
+const whitelist = [
+  'http://localhost:5173', // Untuk development di komputermu
+  'https://adamaryanto.github.io' // <-- PASTIKAN BARIS INI ADA!
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Tidak diizinkan oleh CORS'));
+    }
+  }
+};
+
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173' // Hanya izinkan permintaan dari alamat ini
-}));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // TAMBAHKAN RUTE TES INI DI SINI

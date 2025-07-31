@@ -11,7 +11,7 @@ import RiwayatPeminjamanAdmin from "./Page Admin/RiwayatPeminjamanAdmin";
 import ManajemenUser from "./Page Admin/ManajemenUser";
 import Laporan from "./Page Admin/Laporan";
 import ProfileAdmin from "./Page Admin/ProfileAdmin";
-import LayoutUser from "./Component/LayoutUser";
+import LayoutUser from "./component/LayoutUser";
 import DashboardUser from "./PageUser.jsx/DashboardUSer";
 import PengajuanUser from "./PageUser.jsx/PengajuanUser";
 import PengembalianBarangUser from "./PageUser.jsx/PengembalianBarangUser";
