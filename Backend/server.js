@@ -25,18 +25,35 @@ app.get('/', (req, res) => {
   res.send('Server Railway jalan!');
 });
 // Koneksi ke database menggunakan Pool
-// const pool = mysql.createPool({
-//   host: process.env.MYSQLHOST,
-//   port: process.env.MYSQLPORT || 3306,
-//   user: process.env.MYSQLUSER,
-//   password: process.env.MYSQLPASSWORD,
-//   database: process.env.MYSQLDATABASE,
-//   waitForConnections: true,
-//   connectionLimit: 10,
-//   queueLimit: 0
-// });
+console.log('🔗 Connecting to database...');
+console.log('DB Host:', process.env.MYSQLHOST);
+console.log('DB Port:', process.env.MYSQLPORT || 3306);
+console.log('DB User:', process.env.MYSQLUSER);
+console.log('DB Name:', process.env.MYSQLDATABASE);
 
-const pool = mysql.createPool(process.env.DATABASE_URL);
+const pool = mysql.createPool({
+  host: process.env.MYSQLHOST,
+  port: process.env.MYSQLPORT || 3306,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  acquireTimeout: 60000,
+  timeout: 60000
+});
+
+// Test database connection
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('❌ Database connection failed:', err.message);
+    console.error('Full error:', err);
+  } else {
+    console.log('✅ Database connected successfully!');
+    connection.release();
+  }
+});
 
 // Endpoint: Register
 // Endpoint: Register (dengan validasi username & email yang lebih detail)
