@@ -898,6 +898,7 @@ app.get('/users/:id/detail', async (req, res) => {
 
 
 // Start server
-// app.listen(5000, () => {
-//   console.log('🚀 Server jalan di http://localhost:5000');
-// });
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server Railway jalan di port ${PORT}`);
+});
