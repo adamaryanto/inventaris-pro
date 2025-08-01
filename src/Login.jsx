@@ -16,7 +16,7 @@ function Login() {
       identifier: username,
       password
     };
-    axios.post('https://inventaris-pro-api.vercel.app/login', dataLogin)
+    axios.post('https://inventaris-pro-production.up.railway.app/login', dataLogin)
       .then((res) => {
         toast.success('Berhasil Login');
         const userId = res.data.user.id;
