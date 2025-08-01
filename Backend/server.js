@@ -24,7 +24,15 @@ const corsOptions = {
 };
 
 // Middleware
-app.use(cors(corsOptions));
+// Hapus atau jadikan komentar konfigurasi corsOptions yang lama
+
+// Gunakan yang ini
+app.use(cors({
+  origin: [
+    'http://localhost:5173', // Untuk development
+    'https://adamaryanto.github.io' // Untuk production
+  ]
+}));
 app.use(express.json());
 
 // TAMBAHKAN RUTE TES INI DI SINI
