@@ -8,30 +8,15 @@ import jwt from 'jsonwebtoken';
 const app = express();
 const SECRET_KEY = 'rahasia-super-aman';
 
-const whitelist = [
-  'http://localhost:5173', // Untuk development di komputermu
-  'https://adamaryanto.github.io' // <-- PASTIKAN BARIS INI ADA!
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Tidak diizinkan oleh CORS'));
-    }
-  }
-};
-
-// Middleware
-// Hapus atau jadikan komentar konfigurasi corsOptions yang lama
-
-// Gunakan yang ini
+// CORS Configuration
 app.use(cors({
   origin: [
     'http://localhost:5173', // Untuk development
     'https://adamaryanto.github.io' // Untuk production
-  ]
+  ],
+  credentials: true, // Allow credentials (cookies, authorization headers)
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
