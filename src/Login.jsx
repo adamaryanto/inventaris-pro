@@ -51,7 +51,7 @@ function Login() {
       {/* Sisi Kiri: Tersembunyi di mobile, tampil di desktop (sm:flex) */}
       <div className="hidden sm:flex w-1/2 bg-[#2f195f] text-white justify-center items-center">
         <img
-          src="/src/Assets/Gemini_Generated_Image_6n9v4j6n9v4j6n9v-removebg-preview.png"
+          src="./Assets/Gemini_Generated_Image_6n9v4j6n9v4j6n9v-removebg-preview.png"
           alt="Logo"
           className="w-[310px] h-[310px]"
         />
@@ -66,7 +66,7 @@ function Login() {
           <form onSubmit={onLogin}>
             {/* Logo Mobile: Tampil di mobile (block), tersembunyi di desktop (sm:hidden) */}
             <img
-              src="/src/Assets/Gemini_Generated_Image_6n9v4j6n9v4j6n9v-removebg-preview.png"
+              src="/public/Gemini_Generated_Image_6n9v4j6n9v4j6n9v-removebg-preview.png"
               alt="Logo Mobile"
               className="block sm:hidden w-32 h-32 mx-auto mb-5"
             />
