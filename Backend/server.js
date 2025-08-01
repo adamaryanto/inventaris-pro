@@ -8,12 +8,9 @@ import jwt from 'jsonwebtoken';
 const app = express();
 const SECRET_KEY = 'rahasia-super-aman';
 
-// CORS Configuration
+// CORS Configuration - ALLOW ALL ORIGINS FOR TESTING
 app.use(cors({
-  origin: [
-    'http://localhost:5173', // Untuk development
-    'https://adamaryanto.github.io' // Untuk production
-  ],
+  origin: true, // Allow all origins for testing
   credentials: true, // Allow credentials (cookies, authorization headers)
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -30,43 +27,62 @@ let pool;
 // Function to initialize database connection
 function initializeDatabase() {
   console.log('🔗 Initializing database connection...');
-  console.log('DB Host:', process.env.MYSQLHOST || 'undefined');
-  console.log('DB Port:', process.env.MYSQLPORT || 3306);
-  console.log('DB User:', process.env.MYSQLUSER || 'undefined');
-  console.log('DB Name:', process.env.MYSQLDATABASE || 'undefined');
   
-  if (!process.env.MYSQLHOST || !process.env.MYSQLUSER || !process.env.MYSQLDATABASE) {
-    console.error('❌ Missing required database environment variables');
-    console.log('Please set: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE');
-    return;
-  }
+  // Try DATABASE_URL first (Railway standard)
+  if (process.env.DATABASE_URL) {
+    console.log('Using DATABASE_URL connection');
+    try {
+      pool = mysql.createPool(process.env.DATABASE_URL);
+      console.log('✅ Database pool created with DATABASE_URL');
+    } catch (error) {
+      console.error('❌ Error with DATABASE_URL:', error.message);
+    }
+  } else {
+    // Fallback to individual environment variables
+    console.log('DB Host:', process.env.MYSQLHOST || process.env.DB_HOST || 'undefined');
+    console.log('DB Port:', process.env.MYSQLPORT || process.env.DB_PORT || 3306);
+    console.log('DB User:', process.env.MYSQLUSER || process.env.DB_USER || 'undefined');
+    console.log('DB Name:', process.env.MYSQLDATABASE || process.env.DB_NAME || 'undefined');
+    
+    const host = process.env.MYSQLHOST || process.env.DB_HOST;
+    const user = process.env.MYSQLUSER || process.env.DB_USER;
+    const database = process.env.MYSQLDATABASE || process.env.DB_NAME;
+    const password = process.env.MYSQLPASSWORD || process.env.DB_PASSWORD;
+    const port = process.env.MYSQLPORT || process.env.DB_PORT || 3306;
+    
+    if (!host || !user || !database) {
+      console.error('❌ Missing required database environment variables');
+      console.log('Please set either DATABASE_URL or: MYSQLHOST/DB_HOST, MYSQLUSER/DB_USER, MYSQLPASSWORD/DB_PASSWORD, MYSQLDATABASE/DB_NAME');
+      return;
+    }
 
-  try {
-    pool = mysql.createPool({
-      host: process.env.MYSQLHOST,
-      port: process.env.MYSQLPORT || 3306,
-      user: process.env.MYSQLUSER,
-      password: process.env.MYSQLPASSWORD,
-      database: process.env.MYSQLDATABASE,
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-      acquireTimeout: 60000,
-      timeout: 60000
-    });
+    try {
+      pool = mysql.createPool({
+        host: host,
+        port: port,
+        user: user,
+        password: password,
+        database: database,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0,
+        acquireTimeout: 60000,
+        timeout: 60000
+      });
 
-    // Test database connection
-    pool.getConnection((err, connection) => {
-      if (err) {
-        console.error('❌ Database connection failed:', err.message);
-        console.error('Full error:', err);
-      } else {
-        console.log('✅ Database connected successfully!');
-        connection.release();
-      }
-    });
-  } catch (error) {
-    console.error('❌ Error creating database pool:', error.message);
+      // Test database connection
+      pool.getConnection((err, connection) => {
+        if (err) {
+          console.error('❌ Database connection failed:', err.message);
+          console.error('Full error:', err);
+        } else {
+          console.log('✅ Database connected successfully!');
+          connection.release();
+        }
+      });
+    } catch (error) {
+      console.error('❌ Error creating database pool:', error.message);
+    }
   }
 }
 
