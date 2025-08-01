@@ -24,36 +24,51 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Server Railway jalan!');
 });
-// Koneksi ke database menggunakan Pool
-console.log('🔗 Connecting to database...');
-console.log('DB Host:', process.env.MYSQLHOST);
-console.log('DB Port:', process.env.MYSQLPORT || 3306);
-console.log('DB User:', process.env.MYSQLUSER);
-console.log('DB Name:', process.env.MYSQLDATABASE);
+// Initialize database pool variable
+let pool;
 
-const pool = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  port: process.env.MYSQLPORT || 3306,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  acquireTimeout: 60000,
-  timeout: 60000
-});
-
-// Test database connection
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('❌ Database connection failed:', err.message);
-    console.error('Full error:', err);
-  } else {
-    console.log('✅ Database connected successfully!');
-    connection.release();
+// Function to initialize database connection
+function initializeDatabase() {
+  console.log('🔗 Initializing database connection...');
+  console.log('DB Host:', process.env.MYSQLHOST || 'undefined');
+  console.log('DB Port:', process.env.MYSQLPORT || 3306);
+  console.log('DB User:', process.env.MYSQLUSER || 'undefined');
+  console.log('DB Name:', process.env.MYSQLDATABASE || 'undefined');
+  
+  if (!process.env.MYSQLHOST || !process.env.MYSQLUSER || !process.env.MYSQLDATABASE) {
+    console.error('❌ Missing required database environment variables');
+    console.log('Please set: MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE');
+    return;
   }
-});
+
+  try {
+    pool = mysql.createPool({
+      host: process.env.MYSQLHOST,
+      port: process.env.MYSQLPORT || 3306,
+      user: process.env.MYSQLUSER,
+      password: process.env.MYSQLPASSWORD,
+      database: process.env.MYSQLDATABASE,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      acquireTimeout: 60000,
+      timeout: 60000
+    });
+
+    // Test database connection
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error('❌ Database connection failed:', err.message);
+        console.error('Full error:', err);
+      } else {
+        console.log('✅ Database connected successfully!');
+        connection.release();
+      }
+    });
+  } catch (error) {
+    console.error('❌ Error creating database pool:', error.message);
+  }
+}
 
 // Endpoint: Register
 // Endpoint: Register (dengan validasi username & email yang lebih detail)
@@ -919,6 +934,26 @@ app.get('/users/:id/detail', async (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
+
+// Start server first, then initialize database
 app.listen(PORT, () => {
-  console.log(`🚀 Server Railway jalan di port ${PORT}`);
+  console.log(`🚀 Server Railway started on port ${PORT}`);
+  console.log('Environment check:');
+  console.log('- NODE_ENV:', process.env.NODE_ENV || 'undefined');
+  console.log('- PORT:', PORT);
+  
+  // Initialize database after server starts
+  initializeDatabase();
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+  console.error('Stack:', error.stack);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise);
+  console.error('Reason:', reason);
 });
